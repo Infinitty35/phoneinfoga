@@ -32,6 +32,26 @@ func (_m *NumverifySupplierReq) SetApiKey(_a0 string) suppliers.NumverifySupplie
 	return r0
 }
 
+// SetApiType provides a mock function with given fields: _a0
+func (_m *NumverifySupplierReq) SetApiType(_a0 string) suppliers.NumverifySupplierRequestInterface {
+	ret := _m.Called(_a0)
+
+	if len(ret) == 0 {
+		panic("no return value specified for SetApiType")
+	}
+
+	var r0 suppliers.NumverifySupplierRequestInterface
+	if rf, ok := ret.Get(0).(func(string) suppliers.NumverifySupplierRequestInterface); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(suppliers.NumverifySupplierRequestInterface)
+		}
+	}
+
+	return r0
+}
+
 // ValidateNumber provides a mock function with given fields: _a0
 func (_m *NumverifySupplierReq) ValidateNumber(_a0 string) (*suppliers.NumverifyValidateResponse, error) {
 	ret := _m.Called(_a0)
