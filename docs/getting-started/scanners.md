@@ -11,6 +11,7 @@ Note that all scanners use environment variables for configuration values. You c
 ```shell
 # .env.local
 NUMVERIFY_API_KEY="value"
+NUMVERIFY_API_TYPE="classic"
 GOOGLECSE_CX="value"
 GOOGLE_API_KEY="value"
 ```
@@ -60,19 +61,39 @@ The local scan is probably the simplest scan of PhoneInfoga. By default, the too
 
 ## Numverify
 
-Numverify provide standard but useful information such as country code, location, line type and carrier. This scanners requires an API-key which you can get on their website after creating an account. You can use a free API key as long as you don't exceed the monthly quota. **This is an [apilayer](https://apilayer.com/marketplace/number_verification-api) key, not numverify itself.**
+Numverify provides country code, location, line type and carrier. The scanner needs an API key. Classic keys from [numverify.com](https://numverify.com/) (apilayer.net access keys) and [APILayer Marketplace](https://apilayer.com/marketplace/number_verification-api) keys use different endpoints, so set `NUMVERIFY_API_TYPE` to match the key. The key is never written to logs.
 
-[Read documentation](https://apilayer.com/marketplace/number_verification-api#details-tab)
+[Classic API documentation](https://docs.apilayer.com/numverify/docs/api-documentation) · [Marketplace API](https://apilayer.com/marketplace/number_verification-api#details-tab)
 
 ??? info "Configuration"
 
-    1. Go to the [Api layer website](https://apilayer.com/) and create an account
-    2. Go to "Number Verification API" in the marketplace, click on "Subscribe for free", then choose whatever plan you want
-    3. Copy the new API token and use it as an environment variable
+    **Classic key** (numverify.com / apilayer.net). This is the default.
 
-    | Environment variable |   Option   | Default | Description                                          |
-    |----------------------|------------|---------|-------------------------------------------------------|
-    | NUMVERIFY_API_KEY    |   NUMVERIFY_API_KEY  |         | API key to authenticate to the Numverify API.        |
+    1. Create an account at [numverify.com](https://numverify.com/) and copy the access key.
+    2. Export it as `NUMVERIFY_API_KEY`. Leave `NUMVERIFY_API_TYPE` unset, or set it to `classic`.
+
+    ```shell
+    NUMVERIFY_API_KEY=<access_key> phoneinfoga scan -n +14152007986
+    ```
+
+    Requests go to `https://apilayer.net/api/validate` with the key in the `access_key` query parameter. Plain `http://` to that host fails; the scanner always uses HTTPS.
+
+    **APILayer Marketplace key.**
+
+    1. Go to the [APILayer website](https://apilayer.com/) and create an account.
+    2. Open "Number Verification API" in the marketplace, subscribe, and copy the API token.
+    3. Export the token as `NUMVERIFY_API_KEY` and set `NUMVERIFY_API_TYPE` to `apilayer` (`marketplace` is an alias).
+
+    ```shell
+    NUMVERIFY_API_KEY=<marketplace_key> NUMVERIFY_API_TYPE=apilayer phoneinfoga scan -n +14152007986
+    ```
+
+    Requests go to `https://api.apilayer.com/number_verification/validate` with the key in the `apikey` header.
+
+    | Environment variable | Option | Default | Description |
+    |----------------------|--------|---------|-------------|
+    | NUMVERIFY_API_KEY | NUMVERIFY_API_KEY | | API key. A classic numverify.com access key, or an APILayer Marketplace key when `NUMVERIFY_API_TYPE=apilayer`. |
+    | NUMVERIFY_API_TYPE | NUMVERIFY_API_TYPE | `classic` | `classic` calls `https://apilayer.net/api/validate`. `apilayer` (alias `marketplace`) calls the APILayer Marketplace Number Verification API. |
 
 ??? example "Output example"
 

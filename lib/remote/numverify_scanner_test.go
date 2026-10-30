@@ -35,11 +35,13 @@ func TestNumverifyScanner(t *testing.T) {
 				return n
 			}(),
 			opts: map[string]interface{}{
-				"NUMVERIFY_API_KEY": "secret",
+				"NUMVERIFY_API_KEY":  "secret",
+				"NUMVERIFY_API_TYPE": "",
 			},
 			mocks: func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {
 				s.On("Request").Return(r)
 				r.On("SetApiKey", "secret").Return(r)
+				r.On("SetApiType", "").Return(r)
 				r.On("ValidateNumber", "15556661212").Return(&suppliers.NumverifyValidateResponse{
 					Valid:               true,
 					Number:              "test",
@@ -76,11 +78,13 @@ func TestNumverifyScanner(t *testing.T) {
 				return n
 			}(),
 			opts: map[string]interface{}{
-				"NUMVERIFY_API_KEY": "secret",
+				"NUMVERIFY_API_KEY":  "secret",
+				"NUMVERIFY_API_TYPE": "apilayer",
 			},
 			mocks: func(s *mocks.NumverifySupplier, r *mocks.NumverifySupplierReq) {
 				s.On("Request").Return(r)
 				r.On("SetApiKey", "secret").Return(r)
+				r.On("SetApiType", "apilayer").Return(r)
 				r.On("ValidateNumber", "15556661212").Return(nil, dummyError).Once()
 			},
 			expected: map[string]interface{}{},

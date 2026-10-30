@@ -124,7 +124,9 @@ func TestApi(t *testing.T) {
 				defer gock.Off() // Flush pending mocks after test execution
 
 				_ = os.Setenv("NUMVERIFY_API_KEY", "5ad5554ac240e4d3d31107941b35a5eb")
+				_ = os.Setenv("NUMVERIFY_API_TYPE", "apilayer")
 				defer os.Unsetenv("NUMVERIFY_API_KEY")
+				defer os.Unsetenv("NUMVERIFY_API_TYPE")
 
 				number := "79516566591"
 
@@ -164,7 +166,9 @@ func TestApi(t *testing.T) {
 				defer gock.Off() // Flush pending mocks after test execution
 
 				_ = os.Setenv("NUMVERIFY_API_KEY", "5ad5554ac240e4d3d31107941b35a5eb")
+				_ = os.Setenv("NUMVERIFY_API_TYPE", "apilayer")
 				defer os.Unsetenv("NUMVERIFY_API_KEY")
+				defer os.Unsetenv("NUMVERIFY_API_TYPE")
 
 				number := "79516566591"
 

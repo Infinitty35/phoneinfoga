@@ -46,8 +46,9 @@ func (s *numverifyScanner) DryRun(_ number.Number, opts ScannerOptions) error {
 
 func (s *numverifyScanner) Run(n number.Number, opts ScannerOptions) (interface{}, error) {
 	apiKey := opts.GetStringEnv("NUMVERIFY_API_KEY")
+	apiType := opts.GetStringEnv("NUMVERIFY_API_TYPE")
 
-	res, err := s.client.Request().SetApiKey(apiKey).ValidateNumber(n.International)
+	res, err := s.client.Request().SetApiKey(apiKey).SetApiType(apiType).ValidateNumber(n.International)
 	if err != nil {
 		return nil, err
 	}

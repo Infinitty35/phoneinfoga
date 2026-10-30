@@ -48,6 +48,28 @@ This project is stable but unmaintained. Upcoming bugs won't be fixed and reposi
 - Use the graphical user interface to run scans from the browser
 - Programmatic usage with the [REST API](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/sundowndev/phoneinfoga/master/web/docs/swagger.yaml) and [Go modules](https://pkg.go.dev/github.com/sundowndev/phoneinfoga/v2)
 
+## Numverify API key
+
+The numverify scanner accepts two kinds of keys. The key is never written to logs.
+
+- **Classic** (default) — access key from [numverify.com](https://numverify.com/) / apilayer.net:
+
+  ```shell
+  NUMVERIFY_API_KEY=<access_key> phoneinfoga scan -n +14152007986
+  ```
+
+  `NUMVERIFY_API_TYPE` defaults to `classic`. Requests use `https://apilayer.net/api/validate?access_key=...`.
+
+- **APILayer Marketplace** — key from the [Number Verification API](https://apilayer.com/marketplace/number_verification-api):
+
+  ```shell
+  NUMVERIFY_API_KEY=<marketplace_key> NUMVERIFY_API_TYPE=apilayer phoneinfoga scan -n +14152007986
+  ```
+
+  `marketplace` is an alias for `apilayer`. Requests use `https://api.apilayer.com/number_verification/validate` with an `apikey` header.
+
+See [scanners](docs/getting-started/scanners.md#numverify) for the full configuration table.
+
 ## Anti-features
 
 - Does not claim to provide relevant or verified data, it's just a tool !
